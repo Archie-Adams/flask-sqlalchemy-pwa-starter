@@ -1,3 +1,17 @@
+# A generic Flask/PWA web app starting template
+
+MIT Licence yada yada
+## File explanation
+
+## Setup
+
+step1 Run `python3 db_create.py`.
+- This creates the database and tables.
+- It will work for any Flask-SQLAlchemy project.
+
+
+## Some Flask views examples
+
 ```python
 # r = models.  // models is a class of tables.
 
