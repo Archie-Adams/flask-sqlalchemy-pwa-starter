@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <!-- Meta site descriptors. -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A description of this websites content.">
+
+  <!-- Progressive Web Apps -->
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="transparent">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/icons/icon-152x152.png') }}">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+
+  <!-- CSS styling. -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <!-- Tab text. -->
+  {% if title %}
+  <title>{{ title }}</title>
+  {% else %}
+  <title>No title</title>
+  {% endif %}
+</head>
+
+<body class="text-center">
+  <div class="d-flex justify-content-center vh-100">
+    <form class="m-auto" method="POST">
+      <h1>WEBSITE TITLE</h1>
+      <!-- Change header depending on if form is to sign up or log in. -->
+      <h2 class="h3 mb-3 font-weight-normal">
+        {% if login %}
+        Please log in
+        {% else %}
+        Please sign up
+        {% endif %}
+      </h2>
+
+      <!-- Username and password inputs. -->
+      {{ form.hidden_tag() }}
+      <label for="username" class="sr-only">Username</label>
+      {{ form.username(type_='text', class_='form-control', placeholder='Username') }}
+      <label for="password" class="sr-only mt-3">Password</label>
+      {{ form.password(type_='password', class_='form-control', placeholder='Password') }}
+
+      <!-- If form is to log in add correct login buttons. -->
+      {% if login %}
+      {{ form.rememberMe() }}
+      <label for="rememberMe" class="sr-only mt-3">Remember Me</label> <br>
+
+      <a class="btn btn-lg btn-outline-secondary btn-block mt-3" href="/sign-up">Sign Up</a>
+      <!-- Logging in. -->
+      <input class="btn btn-lg btn-primary btn-block mt-3" type="submit" value="Log In">
+
+      <!-- If form is to sign up add password check functionality and sign -->
+      <!-- up buttons. -->
+      {% else %}
+      <label for="passwordCheck" class="sr-only mt-3">Repeat Password</label>
+      {{ form.passwordCheck(type_='passwordCheck', class_='form-control', placeholder='Repeat Password') }}
+      <div class="alert alert-warning d-none mt-3" role="alert" id="matchWarning">
+        The two passwords must match!
+      </div>
+      <a class="btn btn-lg btn-outline-secondary btn-block mt-3" href="/">Login</a>
+      <!-- Signing up. -->
+      <input class="btn btn-lg btn-primary btn-block mt-3" type="submit" value="Sign Up">
+      <!-- Adds event listeners to both password boxes, if one changes and -->
+      <!-- they do not have the same values show a warning. -->
+      <script>
+        document.querySelectorAll('#password, #passwordCheck').forEach(item => {
+          item.addEventListener('change', event => {
+            if (document.querySelector("#password").value != document.querySelector("#passwordCheck").value) {
+              document.querySelector("#matchWarning").classList.remove("d-none");
+            } else {
+              document.querySelector("#matchWarning").classList.add("d-none");
+            }
+          })
+        })
+      </script>
+      {% endif %}
+
+      <a href="" class="sr-only mt-5" style="display: block;">Employee Login</a>
+
+    </form>
+  </div>
+
+  <!-- Progressive Web Apps -->
+  <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+</body>
+
+</html>
