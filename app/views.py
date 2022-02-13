@@ -46,10 +46,12 @@ def service_worker():
 def login():
     form = LogInForm()
     if form.validate_on_submit():
+        app.logger.info('Form validated')
         user = User.query.filter_by(username=form.username.data).all()
         if user != []:
             login_user(user[0])
-            return redirect("home", code=307)
+            app.logger.info('User %s redirecting to home.', current_user.id)
+            return redirect("/home", code=307)
     return render_template(
         'login-signup.html',
         title = 'WEBSITE NAME - Log-In',
@@ -98,7 +100,7 @@ def home():
 @login_required
 def all_tags():
     return render_template(
-        'home.html',
+        'all_tags.html',
         title = 'All HTML Tags'
     )
 # ---------------------------------------------------------------------------- #

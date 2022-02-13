@@ -5,10 +5,32 @@ MIT Licence yada yada
 
 ## Setup
 
-step1 Run `python3 db_create.py`.
-- This creates the database and tables.
-- It will work for any Flask-SQLAlchemy project.
+1. Run `python3 db_create.py`.
+  - This creates the database and tables.
+  - It will work for any Flask-SQLAlchemy project.
 
+## Notes
+
+- Login-signup may be more clear as a three tier template.
+- The sw.js when precaching "/" breaks the login redirect as the cached page is loaded instead of /home, therefore only /home is precached
+- Moving the sw.js into static/js would be nice
+- the remember me checkbox is not implemented.
+- Functionality of the ajax queries is not implemented.
+
+### Migrations
+
+When the structure of the models change the database and the mapping have to reflect this. As you are
+developing your applications, it is common that you will add and adjust models and tables incrementally.
+The process of changing the structure of the database to reflect the changes in the models is called
+migration. Flask-Migrate (https://flask-migrate.readthedocs.io/en/latest/) is an extension using Alembic
+(http://alembic.zzzcomputing.com/en/latest/) which manages the migrations. Inside `__init__.py` import the
+Migrate object from Flask-Migrate, and then create a Migrate instance by passing the app and db.
+
+Now run the following command in your application directory:
+$ flask db init
+This will create a migrations folder where all the records of your database versions will be stored. To
+execute an initial migration run the following command.
+$ flask db migrate -m "initial migration"
 
 ## Some Flask views examples
 
